@@ -9,34 +9,31 @@
   <p>Ouverture de la page...</p>
 
   <script>
-    // Récupérer le ticket depuis l'URL : qrcode.html?ticket=12345
+    // Récupérer le ticket depuis l’URL (ex: qrcode.html?ticket=12456)
     const params = new URLSearchParams(window.location.search);
     const ticket = params.get("ticket");
 
     if (!ticket) {
       document.body.innerHTML = "<p>Aucun ticket fourni.</p>";
     } else {
-      // Charger qrMapping.json depuis le serveur
+      // Charger le mapping JSON
       fetch("qrMapping.json")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Impossible de charger qrMapping.json");
-          }
+        .then(response => {
+          if (!response.ok) throw new Error("Impossible de charger le mapping");
           return response.json();
         })
-        .then((qrMapping) => {
-          const targetUrl = qrMapping[ticket];
+        .then(mapping => {
+          const targetUrl = mapping[ticket];
+
           if (!targetUrl) {
             document.body.innerHTML = `<p>Aucune URL trouvée pour le ticket : ${ticket}</p>`;
           } else {
-            // Redirection vers l’URL trouvée
+            // Redirection automatique
             window.location.href = targetUrl;
           }
         })
-        .catch((error) => {
-          console.error(error);
-          document.body.innerHTML =
-            "<p>Erreur lors du chargement du mapping.</p>";
+        .catch(err => {
+          document.body.innerHTML = `<p>Erreur lors du chargement du mapping : ${err.message}</p>`;
         });
     }
   </script>
