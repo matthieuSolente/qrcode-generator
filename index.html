@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>QR Code Generator</title>
+</head>
+<body>
+  <div class="flex-container">
+    <div class="wrapper">
+      <h1>QR Code Generator</h1>
+      <div class="flex-row">
+        <div class="flex-col-sm-6">
+          <label for="ticket_input">Numéro de Ticket</label>
+          <input type="text" id="ticket_input" placeholder="Ex: 12473"/>
+
+          <label for="input_text">Entrez votre URL</label>
+          <input type="url" id="input_text" required/>
+
+          <label for="input_error-correction">Error Correction Level</label>
+          <select id="input_error-correction">
+            <option value="L">L - Low (7%)</option>
+            <option value="M">M - Medium (15%)</option>
+            <option value="Q">Q - Quartile (25%)</option>
+            <option value="H">H - High (30%)</option>
+          </select>
+
+          <label for="input_margin">Outer Margin (pixels)</label>
+          <input type="number" id="input_margin" value="30" min="0">
+
+          <label for="input_size">Format</label>
+          <select id="input_size">
+            <option value="100">100x100</option>
+            <option value="200">200x200</option>
+            <option value="300" selected>300x300</option>
+            <option value="600">600x600</option>
+            <option value="700">700x700</option>
+            <option value="800">800x800</option>
+            <option value="900">900x900</option>
+            <option value="1000">1000x1000</option>
+            <option value="1100">1100x1100</option>
+            <option value="1200">1200x1200</option>
+            <option value="1300">1300x1300</option>
+          </select>
+
+          <button id="generateBtn">Générer le QR Code</button>
+        </div>
+
+        <div class="flex-col-sm-6">
+          <div id="qrcodeContainer"></div>
+
+          <label for="input_extension">Format</label>
+          <select id="input_extension">
+            <option value="png" selected>PNG</option>
+            <option value="jpeg">JPEG</option>
+            <option value="webp">WEBP</option>
+          </select>
+          <br/>
+          <button id="downloadBtn" style="display:block;" disabled>Download QR Code</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling/lib/qr-code-styling.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

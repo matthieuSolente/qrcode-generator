@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Redirect</title>
+</head>
+<body>
+  <p>Ouverture de la page...</p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const ticket = params.get("ticket");
+
+    if (!ticket) {
+      document.body.innerHTML = "<p>Aucun ticket fourni.</p>";
+    } else {
+      // Charger le mapping depuis le JSON côté serveur
+      fetch('qrMapping.json')
+        .then(response => response.json())
+        .then(mapping => {
+          const targetUrl = mapping[ticket];
+          if (!targetUrl) {
+            document.body.innerHTML = "<p>Ticket inconnu ou URL non définie.</p>";
+          } else {
+            window.location.href = targetUrl;
+          }
+        })
+        .catch(err => {
+          document.body.innerHTML = "<p>Impossible de charger le mapping.</p>";
+          console.error(err);
+        });
+    }
+  </script>
+</body>
+</html>
